@@ -60,7 +60,7 @@ jobs:
     needs:
     - build-duckdb
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
     strategy:
       fail-fast: false
       matrix:
@@ -113,7 +113,7 @@ jobs:
           fetch-depth: 0
 
       - name: Download a single artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: duckdb
 
