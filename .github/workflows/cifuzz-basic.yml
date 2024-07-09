@@ -57,7 +57,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: duckdb
+          name: duckdb_binary
           path: build/debug/duckdb
 
   fuzzer:
@@ -85,17 +85,17 @@ jobs:
       - name: Download a single artifact
         uses: actions/download-artifact@v4
         with:
-          name: duckdb
+          name: duckdb_binary
 
       - name: Fuzz
         shell: bash
         run: |
-            chmod +x duckdb
+            chmod +x duckdb_binary
             runtime="10 minute"
             endtime=$(date -ud "$runtime" +%s)
 
             while [[ $(date -u +%s) -le $endtime ]]
             do
                 echo "Time Now: `date +%H:%M:%S`"
-                python3 scripts/run_fuzzer.py --no_checks --${{ matrix.fuzzer }} --${{ matrix.data }} --shell=./duckdb --dry
+                python3 scripts/run_fuzzer.py --no_checks --${{ matrix.fuzzer }} --${{ matrix.data }} --shell=./duckdb_binary --dry
             done
